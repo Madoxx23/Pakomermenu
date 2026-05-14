@@ -368,6 +368,7 @@ main{width:100%;max-width:980px;margin:0 auto;padding:0 10px 160px;}
 }
 .promo-desc span{color:rgba(240,240,240,.75)}
 .promo-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.promo-card{cursor:pointer}
 .promo-price{
   font-family:'Bebas Neue',sans-serif;
   font-size:26px;color:var(--y);letter-spacing:1px;line-height:1;
@@ -378,6 +379,20 @@ main{width:100%;max-width:980px;margin:0 auto;padding:0 10px 160px;}
   color:#ff6b63;border-radius:6px;padding:3px 8px;
 }
 .promo-divider{border:none;border-top:1px solid rgba(255,214,0,.12);margin:0 0 6px 0;}
+.promo-video-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  background:none;border:1px solid rgba(255,255,255,.15);
+  border-radius:50px;padding:5px 12px;
+  font-family:'Outfit',sans-serif;font-size:10px;font-weight:600;
+  color:var(--m);cursor:pointer;margin-bottom:12px;
+  transition:border-color .2s,color .2s,background .2s;
+  text-decoration:none;
+}
+.promo-video-btn:hover{
+  border-color:rgba(193,53,132,.7);
+  color:#e1306c;
+  background:rgba(193,53,132,.08);
+}
 
 .float-cart{
   position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
@@ -432,42 +447,45 @@ main{width:100%;max-width:980px;margin:0 auto;padding:0 10px 160px;}
   </div>
   <div class="promos-grid">
 
-    <div class="promo-card">
+    <div class="promo-card" onclick="addPromo('promo1')">
       <div class="promo-badge">&#x1F525; Combo</div>
       <div class="promo-name">2 Pa 2</div>
       <hr class="promo-divider">
       <div class="promo-desc">
         <span>2 Picadas personales</span> + <span>1 Gaseosa litro</span>
       </div>
+      <a class="promo-video-btn" href="https://www.instagram.com/reel/DXvAguzNoHK/?igsh=MW92Mjlxb2hqNWZhaQ==" target="_blank" rel="noopener" onclick="event.stopPropagation()">&#x25B6;&#xFE0F; Ver combo</a>
       <div class="promo-footer">
         <div class="promo-price">$33.900</div>
-        <div class="promo-tag">&#x1F46B; PARA DOS</div>
+        <button class="add-btn" onclick="event.stopPropagation();addPromo('promo1')">+</button>
       </div>
     </div>
 
-    <div class="promo-card">
+    <div class="promo-card" onclick="addPromo('promo2')">
       <div class="promo-badge">&#x26A1; Rápido</div>
       <div class="promo-name">Pal Desvare</div>
       <hr class="promo-divider">
       <div class="promo-desc">
         <span>1 Fantasma Premium</span> + <span>Papas</span> + <span>Gaseosas personales</span>
       </div>
+      <a class="promo-video-btn" href="https://www.instagram.com/reel/DXvAguzNoHK/?igsh=MW92Mjlxb2hqNWZhaQ==" target="_blank" rel="noopener" onclick="event.stopPropagation()">&#x25B6;&#xFE0F; Ver combo</a>
       <div class="promo-footer">
         <div class="promo-price">$19.900</div>
-        <div class="promo-tag">&#x1F44C; IDEAL PERSONAL</div>
+        <button class="add-btn" onclick="event.stopPropagation();addPromo('promo2')">+</button>
       </div>
     </div>
 
-    <div class="promo-card">
+    <div class="promo-card" onclick="addPromo('promo3')">
       <div class="promo-badge">&#x1F451; Familiar</div>
       <div class="promo-name">4 Babys</div>
       <hr class="promo-divider">
       <div class="promo-desc">
         <span>1 Salchiking</span> + <span>4 Limonadas naturales</span>
       </div>
+      <a class="promo-video-btn" href="https://www.instagram.com/reel/DXvAguzNoHK/?igsh=MW92Mjlxb2hqNWZhaQ==" target="_blank" rel="noopener" onclick="event.stopPropagation()">&#x25B6;&#xFE0F; Ver combo</a>
       <div class="promo-footer">
         <div class="promo-price">$89.900</div>
-        <div class="promo-tag">&#x1F465; PARA 4</div>
+        <button class="add-btn" onclick="event.stopPropagation();addPromo('promo3')">+</button>
       </div>
     </div>
 
@@ -615,6 +633,30 @@ var DRINKS=[
 
 var cart=[],payM="efectivo",curItem=null,mQty=1;
 var cardEls={};
+
+var PROMOS={
+  promo1:{id:"promo1",name:"Combo 2 Pa 2",price:33900,ik:null},
+  promo2:{id:"promo2",name:"Combo Pal Desvare",price:19900,ik:null},
+  promo3:{id:"promo3",name:"Combo 4 Babys",price:89900,ik:null}
+};
+
+function addPromo(pid){
+  var p=PROMOS[pid];
+  if(!p)return;
+  addC(p,1);
+  // card pop animation on promo card
+  var cards=document.querySelectorAll(".promo-card");
+  var idx={"promo1":0,"promo2":1,"promo3":2}[pid];
+  if(cards[idx]!==undefined){
+    cards[idx].classList.remove("card-pop");
+    void cards[idx].offsetWidth;
+    cards[idx].classList.add("card-pop");
+    cards[idx].addEventListener("animationend",function h(){
+      cards[idx].classList.remove("card-pop");
+      cards[idx].removeEventListener("animationend",h);
+    });
+  }
+}
 
 function fmt(n){return"$"+n.toLocaleString("es-CO")}
 
