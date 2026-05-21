@@ -571,6 +571,7 @@ main{width:100%;max-width:980px;margin:0 auto;padding:0 10px 160px;}
     <div class="cart-total"><span>Total</span><strong id="cartTotal">$0</strong></div>
     <div class="form-group"><label>&#128100; Nombre</label><input type="text" id="oName" placeholder="Tu nombre" autocomplete="name"></div>
     <div class="form-group"><label>&#128205; Dirección</label><input type="text" id="oAddr" placeholder="Tu dirección de entrega"></div>
+    <div class="form-group"><label>&#128222; Teléfono</label><input type="tel" id="oPhone" placeholder="Tu número de teléfono" autocomplete="tel"></div>
     <div class="form-group"><label>&#128172; Notas (opcional)</label><textarea id="oNotes" placeholder="Sin cebolla, extra salsa..."></textarea></div>
     <div class="form-group"><label>&#128179; Forma de pago</label>
       <div class="pay-methods">
@@ -849,9 +850,11 @@ function sendOrder(){
   if(cart.length===0){toast("\u274C Carrito vacio");return;}
   var name=document.getElementById("oName").value.trim();
   var addr=document.getElementById("oAddr").value.trim();
+  var phone=document.getElementById("oPhone").value.trim();
   var notes=document.getElementById("oNotes").value.trim();
   if(!name){toast("\u274C Ingresa tu nombre");return;}
   if(!addr){toast("\u274C Ingresa tu direccion");return;}
+  if(!phone){toast("\u274C Ingresa tu teléfono");return;}
   var total=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
   var pe=payM==="efectivo"?"\uD83D\uDCB5 Efectivo":"\uD83D\uDCF1 Transferencia";
   var now=new Date();
@@ -862,6 +865,7 @@ function sendOrder(){
   msg+="\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\n";
   msg+="\uD83D\uDC64  *Nombre:*  "+name+"\n";
   msg+="\uD83D\uDCCD  *Direcci\u00F3n:*  "+addr+"\n";
+  msg+="\uD83D\uDCDE  *Tel\u00E9fono:*  "+phone+"\n";
   msg+="\uD83D\uDCB3  *Pago:*  "+pe+"\n";
   msg+="\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\u2508\n";
   msg+="\uD83E\uDDFE  *DETALLE DEL PEDIDO*\n\n";
