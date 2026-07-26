@@ -577,6 +577,7 @@ main{width:100%;max-width:980px;margin:0 auto;padding:0 10px 160px;}
       <div class="pay-methods">
         <div class="pay-opt selected" data-m="efectivo" onclick="selPay(this)">&#128181; Efectivo</div>
         <div class="pay-opt" data-m="transferencia" onclick="selPay(this)">&#128241; Transferencia</div>
+        <div class="pay-opt" data-m="tarjeta" onclick="selPay(this)">&#128179; Tarjeta</div>
       </div>
     </div>
     <button class="send-btn" onclick="sendOrder()">&#128242; ENVIAR POR WHATSAPP</button>
@@ -639,19 +640,19 @@ perros:[
 };
 
 var DRINKS=[
-  {g:"Gaseosas",items:[{id:"b1",n:"Personal",p:4000,s:""},{id:"b2",n:"Litro",p:7000,s:""},{id:"b3",n:"Litro y medio",p:9000,s:""},{id:"b4",n:"3 Litros",p:13000,s:""}]},
-  {g:"Otras bebidas",items:[{id:"b5",n:"Jugo del Valle",p:6000,s:"1 litro"},{id:"b6",n:"Agua natural",p:3500,s:""},{id:"b7",n:"Agua saborizada",p:4000,s:""},{id:"b8",n:"Gatorade",p:5000,s:""},{id:"b9",n:"Monster",p:9000,s:""},{id:"b10",n:"Speed",p:3500,s:""},{id:"b11",n:"Cerveza",p:5000,s:""}]},
+  {g:"Gaseosas",items:[{id:"b1",n:"Personal",p:5000,s:""},{id:"b2",n:"Litro",p:8000,s:""},{id:"b3",n:"Litro y medio",p:10000,s:""},{id:"b4",n:"3 Litros",p:14000,s:""}]},
+  {g:"Otras bebidas",items:[{id:"b5",n:"Jugo del Valle",p:7000,s:"1 litro"},{id:"b6",n:"Agua natural",p:4500,s:""},{id:"b7",n:"Agua saborizada",p:5000,s:""},{id:"b8",n:"Gatorade",p:6000,s:""},{id:"b9",n:"Monster",p:10000,s:""},{id:"b10",n:"Speed",p:4500,s:""},{id:"b11",n:"Cerveza",p:6000,s:""}]},
   {g:"Jugos Naturales",items:[
-    {id:"b12_lulo",n:"Jugo en Agua (Lulo)",p:7500,s:""},
-    {id:"b12_maracuya",n:"Jugo en Agua (Maracuyá)",p:7500,s:""},
-    {id:"b12_cholupa",n:"Jugo en Agua (Cholupa)",p:7500,s:""},
-    {id:"b12_limonada",n:"Jugo en Agua (Limonada)",p:7500,s:""},
-    {id:"b13_lulo",n:"Jugo en Leche (Lulo)",p:9000,s:""},
-    {id:"b13_maracuya",n:"Jugo en Leche (Maracuyá)",p:9000,s:""},
-    {id:"b13_cholupa",n:"Jugo en Leche (Cholupa)",p:9000,s:""}
+    {id:"b12_lulo",n:"Jugo en Agua (Lulo)",p:8500,s:""},
+    {id:"b12_maracuya",n:"Jugo en Agua (Maracuyá)",p:8500,s:""},
+    {id:"b12_cholupa",n:"Jugo en Agua (Cholupa)",p:8500,s:""},
+    {id:"b12_limonada",n:"Jugo en Agua (Limonada)",p:8500,s:""},
+    {id:"b13_lulo",n:"Jugo en Leche (Lulo)",p:10000,s:""},
+    {id:"b13_maracuya",n:"Jugo en Leche (Maracuyá)",p:10000,s:""},
+    {id:"b13_cholupa",n:"Jugo en Leche (Cholupa)",p:10000,s:""}
   ]},
-  {g:"Limonadas",items:[{id:"b14",n:"Cerezada",p:9000,s:""},{id:"b15",n:"Limonada de coco",p:9000,s:""}]},
-  {g:"Sodas Italianas",items:[{id:"b16",n:"Frutos rojos",p:13000,s:""},{id:"b17",n:"Frutos amarillos",p:13000,s:""},{id:"b18",n:"Frutos verdes",p:13000,s:""}]}
+  {g:"Limonadas",items:[{id:"b14",n:"Cerezada",p:10000,s:""},{id:"b15",n:"Limonada de coco",p:10000,s:""}]},
+  {g:"Sodas Italianas",items:[{id:"b16",n:"Frutos rojos",p:14000,s:""},{id:"b17",n:"Frutos amarillos",p:14000,s:""},{id:"b18",n:"Frutos verdes",p:14000,s:""}]}
 ];
 
 var cart=[],payM="efectivo",curItem=null,mQty=1;
@@ -856,7 +857,7 @@ function sendOrder(){
   if(!addr){toast("\u274C Ingresa tu direccion");return;}
   if(!phone){toast("\u274C Ingresa tu teléfono");return;}
   var total=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
-  var pe=payM==="efectivo"?"\uD83D\uDCB5 Efectivo":"\uD83D\uDCF1 Transferencia";
+  var pe=payM==="efectivo"?"\uD83D\uDCB5 Efectivo":(payM==="transferencia"?"\uD83D\uDCF1 Transferencia":"\uD83D\uDCB3 Tarjeta");
   var now=new Date();
   var timeStr=now.toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"});
   var dateStr=now.toLocaleDateString("es-CO",{weekday:"long",day:"numeric",month:"long"});
